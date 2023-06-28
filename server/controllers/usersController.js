@@ -36,6 +36,7 @@ const RegisterUser = asyncHandler( async(req,res)=>{
             _id: data._id,
             name: data.name,
             email: data.email,
+            token: generateToken(data._id)
         })
     }else{
         res.status(400);
@@ -56,7 +57,8 @@ const LoginUser = asyncHandler(async(req,res)=>{
         res.status(200).json({
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            token: generateToken(user._id)
         })
     }else{
         res.status(400);
@@ -69,7 +71,26 @@ const LoginUser = asyncHandler(async(req,res)=>{
 //@route   GET /users/me
 //@access  Private
 const GetMe = async (req,res)=>{
-    res.json({message: "Get me"});
+    const user = await Model.findById(req.user._id);
+
+    if(user){
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        })
+    }else{
+        res.status(404);
+        throw new Error("User not found");
+    }
+
+}
+
+//Generate token
+const generateToken = (id)=>{
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: "30d"
+    })
 }
 
 module.exports = {
