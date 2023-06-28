@@ -4,6 +4,7 @@ const cors = require('cors');
 const sales_route = require('./routes/sales_route');
 const stock_route = require('./routes/stock_route');
 const daily_sales_route = require('./routes/daily_sales_route');
+const user_route = require('./routes/users_route');
 require('dotenv').config();
 
 
@@ -29,3 +30,4 @@ database.once('open', () => console.log('Connected to Database'));
 app.use('/sales', sales_route);
 app.use('/stock', stock_route);
 app.use('/daily_sales', daily_sales_route);
+app.use('/users', user_route);
