@@ -23,7 +23,6 @@ app.use(express.json());
 
 mongoose.connect(databaseURL , { useNewUrlParser: true, useUnifiedTopology: true });
 const database = mongoose.connection;
-
 database.on('error', (error) => console.error(error));
 database.once('open', () => console.log('Connected to Database'));
 

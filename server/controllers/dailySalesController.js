@@ -12,7 +12,8 @@ const calculate = async () => {
                 },
                 total_quantity: {
                     $sum: "$sold_quantity"
-                }
+                },
+                user: { $first: "$user" }
             },
         },
         {
@@ -21,6 +22,7 @@ const calculate = async () => {
                   date: '$_id',
                   total_sales: 1,
                   total_quantity: 1,
+                  user: 1
                 },
         }
     ]);
@@ -32,11 +34,11 @@ const calculate = async () => {
 
 // @desc    Get daily sales
 // @route   GET /daily_sales/get_daily_sales
-// @access  Public
+// @access  Private
 const GetDailySales = async (req, res) => {
     await calculate();
     try {
-        const daily_sales = await dailySales.find();
+        const daily_sales = await dailySales.find({user: req.user.id});
         res.json(daily_sales);
     }
     catch (err) {

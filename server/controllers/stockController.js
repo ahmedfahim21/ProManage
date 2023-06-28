@@ -1,11 +1,11 @@
-const Model = require('../models/Stock.Model');
+const Stock = require('../models/Stock.Model');
 const User = require('../models/Users.Model');
 
 // @desc   Update stock
 // @route  POST /stock/update_stock
 // @access Private
 const UpdateStock = async (req,res)=>{
-    const data = new Model({
+    const data = new Stock({
         item_name: req.body.item_name,
         item_quantity: req.body.item_quantity,
         item_price: req.body.item_price,
@@ -25,7 +25,7 @@ const UpdateStock = async (req,res)=>{
 // @access Private
 const GetAllStock = async (req,res)=>{
     try{
-        const data = await Model.find({ user: req.user.id });
+        const data = await Stock.find({ user: req.user.id });
         res.status(200).json(data);
     }
     catch(err){
@@ -46,13 +46,13 @@ const GetStockById = async (req,res)=>{
             return res.status(404).json({message: "User not found"});
         }
 
-        const itemOwner = await Model.findById(id);
+        const itemOwner = await Stock.findById(id);
 
         if(user._id != itemOwner.user.toString()){
             return res.status(401).json({message: "Unauthorized"});
         }
 
-        const data = await Model.findById(req.params.id);
+        const data = await Stock.findById(req.params.id);
         res.status(200).json(data);
     }
     catch(err){
@@ -69,7 +69,7 @@ const UpdateStockById = async (req,res)=>{
         const updated_data = req.body;
 
         const user = await User.findById(req.user.id);
-        const itemOwner = await Model.findById(id);
+        const itemOwner = await Stock.findById(id);
 
         if(!user){
             return res.status(404).json({message: "User not found"});
@@ -80,7 +80,7 @@ const UpdateStockById = async (req,res)=>{
         }
         
 
-        const result = await Model.findByIdAndUpdate(id, updated_data);
+        const result = await Stock.findByIdAndUpdate(id, updated_data);
         res.status(200).send(result);
 
     }
@@ -97,7 +97,7 @@ const DeleteStockById = async (req,res)=>{
         const id = req.params.id;
 
         const user = await User.findById(req.user.id);
-        const itemOwner = await Model.findById(id);
+        const itemOwner = await Stock.findById(id);
 
         if(!user){
             return res.status(404).json({message: "User not found"});
@@ -106,7 +106,7 @@ const DeleteStockById = async (req,res)=>{
         if(user._id != itemOwner.user.toString()){
             return res.status(401).json({message: "Unauthorized"});
         }
-        const result = await Model.findByIdAndDelete(id);
+        const result = await Stock.findByIdAndDelete(id);
         res.status(200).send(`Document with name ${result.item_name} deleted`);
     }
     catch(err){
