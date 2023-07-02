@@ -1,8 +1,14 @@
 import { Formik, Form, Field } from 'formik';
 import { Container, Row, Col, Button, Toast } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { useLoginMutation } from '../slices/usersapi-slice';
+import { setCredentials } from '../slices/auth-slice';
+import { useEffect } from 'react';
+import Header from '../components/Header';
 
 const LoginPage = () => {
   const initialValues = {
@@ -15,21 +21,36 @@ const LoginPage = () => {
     password: Yup.string().required('Password is required'),
   });
 
-  const handleSubmit = (values) => {
-    //make a post request to the server
-    fetch('http://localhost:3000/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [login] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth); 
+
+  useEffect(() => {
+    if (userInfo) {
+      Navigate('/');
     }
-    )
-    .catch(err => console.log(err))
+  }, [userInfo, Navigate]); 
+
+
+  const handleSubmit = async(values) => {
+    //make a post request to the server
+    console.log(values);
+    try{
+      const res = await login(values).unwrap();
+      dispatch(setCredentials({...res}));
+    }
+    catch(err){
+      toast.error(err.data, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000
+      }
+      );
+
+    } 
+    
 
   };
 
@@ -43,7 +64,8 @@ const LoginPage = () => {
     });
   };
 
-  return (
+  return (<>
+    <Header/>
     <Container>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
@@ -101,9 +123,11 @@ const LoginPage = () => {
           <p className="my-3">
             Don&apos;t have an account? <Link to="/register">Register</Link>
             </p>
+            <ToastContainer/>
         </Col>
       </Row>
     </Container>
+    </>
   );
 };
 

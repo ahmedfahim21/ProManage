@@ -1,5 +1,5 @@
 import {Navbar, Nav, Container} from 'react-bootstrap'
-import {FaSignOutAlt} from 'react-icons/fa'
+import {FaSignOutAlt, FaSignInAlt} from 'react-icons/fa'
 
 function Header() {
   return (
@@ -10,7 +10,8 @@ function Header() {
                 <Navbar.Toggle aria-controls='navbar-toggle' />
                 <Navbar.Collapse className="justify-content-end" id="navbar-toggle" >
                 <Nav>
-                    <Nav.Link href="/"><FaSignOutAlt /> Logout</Nav.Link>
+                    <Nav.Link href="/login"><FaSignInAlt /> Login</Nav.Link>
+                    <Nav.Link href="/register"><FaSignOutAlt /> Register</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Container>

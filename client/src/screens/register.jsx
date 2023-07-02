@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Toast } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import Header from '../components/Header';
 
 const RegistrationPage = () => {
   const initialValues = {
@@ -46,6 +47,8 @@ const RegistrationPage = () => {
   };
 
   return (
+    <>
+    <Header/>
     <Container>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
@@ -122,6 +125,7 @@ const RegistrationPage = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };
 

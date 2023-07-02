@@ -10,15 +10,13 @@ const RegisterUser = asyncHandler( async(req,res)=>{
     const {name, email, password} = req.body;
 
     if(!name || !email || !password){
-        res.status(400);
-        throw new Error("Please fill all fields");
+        res.status(400).send("Please fill all fields");
     }
 
     //checkIfUserExists
     const userExists = await Model.findOne({email: email}); 
     if(userExists){
-        res.status(400);
-        throw new Error("User already exists");
+        res.status(400).send("User already exists");
     }
 
     //hashPassword
@@ -40,8 +38,7 @@ const RegisterUser = asyncHandler( async(req,res)=>{
             token: regtoken
         })
     }else{
-        res.status(400);
-        throw new Error("Invalid user data");
+        res.status(400).send("Invalid user data");
     }
 })
 
@@ -64,8 +61,7 @@ const LoginUser = asyncHandler(async(req,res)=>{
             token: logintoken
         })
     }else{
-        res.status(400);
-        throw new Error("Invalid email or password");
+        res.status(400).send("Invalid email or password");
     }
 
 })
@@ -83,8 +79,7 @@ const GetMe = async (req,res)=>{
             email: user.email
         })
     }else{
-        res.status(404);
-        throw new Error("User not found");
+        res.status(404).send("User not found");
     }
 
 }
