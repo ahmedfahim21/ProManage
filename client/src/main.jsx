@@ -4,6 +4,8 @@ import App from './App.jsx'
 import Register from './screens/register.jsx'
 import ErrorPage from './screens/error-page.jsx'
 import Login from './screens/login.jsx'
+import Dashboard from './screens/dashboard.jsx'
+import PrivateRoute from './components/PrivateRoute.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import { createBrowserRouter, RouterProvider  } from 'react-router-dom'
@@ -14,9 +16,12 @@ const router = createBrowserRouter([
   { name: 'Home', path: '/', element: <App/>, errorElement: <ErrorPage /> },
   { name: 'Register', path: '/register', element: <Register/> },
   { name: 'Login', path: '/login', element: <Login /> },
-  // { name: 'Dashboard', path: '/dashboard', component: App },
+  { name: 'Private', path: '/', element: <PrivateRoute />,
+    children: [
+      { name: 'Dashboard', path: '/dashboard', element: <Dashboard /> },
+    ]  
+},
 ])
-
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

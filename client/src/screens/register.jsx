@@ -1,39 +1,69 @@
 import { Formik, Form, Field } from 'formik';
 import { Container, Row, Col, Button, Toast } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import * as Yup from 'yup';
 import Header from '../components/Header';
+import {setCredentials} from '../slices/auth-slice'
+import { useDispatch, useSelector } from 'react-redux';
+import { useRegisterMutation } from '../slices/usersapi-slice';
+import { useEffect } from 'react';
 
 const RegistrationPage = () => {
   const initialValues = {
     name: '',
     email: '',
     password: '',
+    confirmpassword: '',
   };
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().required('Password is required').min(6,'Password must be atleast 6 characters'),
+    confirmpassword: Yup.string().required('Confirm Password is required')
   });
 
-  const handleSubmit = (values) => {
-    //make a post request to the server
-    fetch('http://localhost:3000/api/users/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-    }
-    )
-    .catch(err => console.log(err))
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const [register] = useRegisterMutation();
+
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+    }
+  },[userInfo,navigate]);
+
+  const handleSubmit = async(values) => {
+    //make a post request to the server
+    if(values.password !== values.confirmpassword){
+      toast.error('Passwords do not match', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000
+      }
+      );
+      return;
+    }
+    const data = {
+      name: values.name,
+      email: values.email,
+      password: values.password
+    }
+    try{
+      const res = await register(data).unwrap();
+      dispatch(setCredentials({...res}));
+    }
+    catch(err){
+      toast.error(err.data, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000
+      }
+      );
+    }
   };
 
   const handleValidationErrors = (errors) => {
@@ -113,6 +143,24 @@ const RegistrationPage = () => {
                     </Toast>
                   )}
                 </div>
+                <div className="mb-3">
+                  <label htmlFor="confirmpassword" className="form-label">
+                    Confirm Password
+                  </label>
+                  <Field
+                    type="password"
+                    id="confirmpassword"
+                    name="confirmpassword"
+                    className={`form-control ${
+                      errors.password && touched.password ? 'is-invalid' : ''
+                    }`}
+                  />
+                  {errors.password && touched.password && (
+                    <Toast show>
+                      <Toast.Body>{errors.password}</Toast.Body>
+                    </Toast>
+                  )}
+                </div>
                 <Button variant="primary" type="submit">
                   Register
                 </Button>
@@ -122,6 +170,7 @@ const RegistrationPage = () => {
           <p className="my-3">
             Already have an account? <Link to="/login">Login</Link>
         </p>
+        <ToastContainer />
         </Col>
       </Row>
     </Container>

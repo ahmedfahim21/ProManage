@@ -30,14 +30,13 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (userInfo) {
-      Navigate('/');
+      Navigate('/dashboard');
     }
   }, [userInfo, Navigate]); 
 
 
   const handleSubmit = async(values) => {
     //make a post request to the server
-    console.log(values);
     try{
       const res = await login(values).unwrap();
       dispatch(setCredentials({...res}));
@@ -48,10 +47,7 @@ const LoginPage = () => {
         autoClose: 5000
       }
       );
-
     } 
-    
-
   };
 
   const handleValidationErrors = (errors) => {

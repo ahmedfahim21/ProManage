@@ -85,8 +85,8 @@ const GetMe = async (req,res)=>{
 }
 
 // @desc   Logout user
-// @route  GET /users/logout
-// @access Private
+// @route  POST /users/logout
+// @access Public
 const LogoutUser = asyncHandler(async(req,res)=>{
     res.cookie('jwt', 'logout', {
         secure: process.env.NODE_ENV === 'production' ? true : false,
@@ -94,7 +94,7 @@ const LogoutUser = asyncHandler(async(req,res)=>{
         expires: new Date(0)
     })
 
-    res.status(200).json({message: "Logout successful"});
+    res.status(200).json({message:"Logout successful"});
 })
 
 

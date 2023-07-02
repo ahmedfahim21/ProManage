@@ -10,7 +10,7 @@ router.post('/login', usersController.LoginUser);
 
 router.get('/me', protect, usersController.GetMe);
 
-router.get('/logout', protect, usersController.LogoutUser);
+router.post('/logout', usersController.LogoutUser);
 
 
 module.exports = router;
