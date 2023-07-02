@@ -1,7 +1,7 @@
 import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap'
 import {FaSignOutAlt, FaSignInAlt} from 'react-icons/fa'
 import {useSelector,useDispatch} from 'react-redux'
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate,Link } from 'react-router-dom' 
 import { logout } from '../slices/auth-slice'
 import { useLogoutMutation } from '../slices/usersapi-slice'
 
@@ -34,13 +34,15 @@ function Header() {
                 <Navbar.Toggle aria-controls='navbar-toggle' />
                 <Navbar.Collapse className="justify-content-end" id="navbar-toggle" >
                 <Nav>{userInfo ? (
+                  <Nav>
                   <NavDropdown title={userInfo.name} id='username'>
                     <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                   </NavDropdown>
+                  </Nav>
                 ):(
                   <>
-                    <Nav.Link to='/login'><FaSignInAlt /> Login</Nav.Link>
-                    <Nav.Link to='/register'><FaSignOutAlt /> Register</Nav.Link>
+                    <Nav.Link><Link to='/login'><FaSignInAlt /> Login</Link></Nav.Link>
+                    <Nav.Link><Link to='/register'><FaSignOutAlt /> Register</Link></Nav.Link>
                   </>
                 )}    
                 </Nav>
