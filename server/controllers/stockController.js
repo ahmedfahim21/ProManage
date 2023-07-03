@@ -40,15 +40,10 @@ const GetAllStock = async (req,res)=>{
 const GetStockById = async (req,res)=>{
     try{
         const id = req.params.id;
-        const user = await User.findById(req.user.id);
-
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
 
         const itemOwner = await Stock.findById(id);
 
-        if(user._id != itemOwner.user.toString()){
+        if(req.user.id != itemOwner.user.toString()){
             return res.status(401).json({message: "Unauthorized"});
         }
 
@@ -68,20 +63,19 @@ const UpdateStockById = async (req,res)=>{
         const id = req.params.id;
         const updated_data = req.body;
 
-        const user = await User.findById(req.user.id);
         const itemOwner = await Stock.findById(id);
 
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
 
-        if(user._id != itemOwner.user.toString()){
+        if(req.user.id != itemOwner.user.toString()){
             return res.status(401).json({message: "Unauthorized"});
         }
         
 
         const result = await Stock.findByIdAndUpdate(id, updated_data);
-        res.status(200).send(result);
+
+        const new_data = await Stock.findById(result.id);
+
+        res.status(200).send(new_data);
 
     }
     catch(err){
@@ -96,14 +90,10 @@ const DeleteStockById = async (req,res)=>{
     try{
         const id = req.params.id;
 
-        const user = await User.findById(req.user.id);
         const itemOwner = await Stock.findById(id);
 
-        if(!user){
-            return res.status(404).json({message: "User not found"});
-        }
 
-        if(user._id != itemOwner.user.toString()){
+        if(req.user.id != itemOwner.user.toString()){
             return res.status(401).json({message: "Unauthorized"});
         }
         const result = await Stock.findByIdAndDelete(id);

@@ -7,7 +7,7 @@ function DashboardComp({title,text}) {
           bg='light'
           key='light'
           text='dark'
-          style={{ width: '18rem', height:'10rem', padding: '10px'}}
+          style={{ width: '18rem', height:'10rem', padding: '10px', cursor: 'pointer'}}
           className="mb-2"
         >
           <Card.Body>
