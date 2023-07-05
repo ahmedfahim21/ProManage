@@ -6,6 +6,9 @@ import Spinner from 'react-bootstrap/Spinner'
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import StockComp from "../components/stockComp"
+import { exportFile } from "../utils/excel"
+
+
 
 
 
@@ -27,6 +30,18 @@ function Stocks() {
 
 
 
+    const handleDownloadTable = () => {
+        const data = stocks.map((stock) => {
+            return {
+                Item_Name: stock.item_name,
+                Item_Quantity: stock.item_quantity,
+                Item_Price: stock.item_price,
+            };
+        });
+        exportFile('stocks', data);
+    };
+
+
   return (
     <div>
         <Header />
@@ -36,6 +51,7 @@ function Stocks() {
             <h1 style={{ marginTop:'40px'}}>Stocks</h1>
             <p style={{ marginTop:'10px'}}>Manage your stocks</p>
             <Link to='/addstock'><Button variant="success" style={{ marginTop:'10px'}}>Add Stock</Button></Link>
+            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table</Button>
             <br />
             {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
             {!isLoading && stocks.length === 0 ? 

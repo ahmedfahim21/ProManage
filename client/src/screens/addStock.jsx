@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Header from '../components/Header';
 import { useDispatch } from 'react-redux';
 import { createStock } from '../slices/stocks-slice';
+import { useState } from 'react';
 
 
 const StocksPage = () => {
@@ -60,6 +61,63 @@ const StocksPage = () => {
       });
     });
   };
+
+  //CSV upload
+  const [file, setFile] = useState();
+  const fileReader = new FileReader();
+
+  const handleOnFileChange = (e) => {
+      setFile(e.target.files[0]);
+  };
+
+  const handleOnFileSubmit = (e) => {
+      e.preventDefault();
+
+      if (file) {
+          fileReader.onload = function (event) {
+              const csvOutput = event.target.result;
+              //make json object
+              const lines = csvOutput.split('\n');
+              const result = [];
+              const headers = lines[0].split(',');
+              for (let i = 1; i < lines.length-1; i++) {
+                  const obj = {};
+                  const currentline = lines[i].split(',');
+                  for (let j = 0; j < headers.length; j++) {
+                      obj[headers[j]] = currentline[j];
+                  }
+                  result.push(obj);
+              }
+              try{
+                for(let i=0; i<result.length; i++){
+                    const data = result[i];
+                    dispatch(createStock(data))
+                }
+                toast.success(`Successfully added ${result.length} stocks`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2000
+                })
+              }
+              catch(err){
+                toast.error(err.data, {
+                  position: toast.POSITION.TOP_RIGHT,
+                  autoClose: 5000
+                }
+                );
+              }
+          };
+          fileReader.readAsText(file);
+      }
+  };
+
+  const handleDownloadReference = () => {
+    const link = document.createElement('a');
+    link.href = '/import_stocks.csv';
+    link.download = 'reference.csv'; 
+    link.click();
+  };
+
+  
 
   return (
     <>
@@ -128,8 +186,36 @@ const StocksPage = () => {
 
             )}
           </Formik>
+        <p style={{marginTop:'30px' ,textAlign:'center', fontSize:'20px'}}>OR</p>
+        
+          <Col style={{marginTop:'20px'}}>
+        <Formik>
+            <Form>  
+                <div className="mb-3">
+                    <label htmlFor="file" className="form-label">
+                        Upload CSV
+                    </label>
+                    <input 
+                        type="file" 
+                        className="form-control"
+                        id="file"
+                        name="file"
+                        onChange={handleOnFileChange}
+                    />
+                    <Button variant="secondary" style={{width:'40%', marginTop:'10px', justifyContent:'center'}} onClick={handleDownloadReference}>
+                      Download Reference CSV
+                    </Button>
+                </div>
+
+                <Button variant="info" type="submit" style={{ marginTop:'10px', width:'100%'}} onClick={handleOnFileSubmit}>
+                    Import
+                </Button>
+            </Form>
+        </Formik>
+        </Col>
         <ToastContainer />
         </Col>
+        
       </Row>
     </Container>
     </>
