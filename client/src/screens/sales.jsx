@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAllSales, reset } from "../slices/sales-slice"
 import SalesComp from "../components/salesComp.jsx"
 import { ToastContainer } from "react-toastify"
+import { exportFile } from "../utils/excel"
+import { FaDownload, FaPlus } from "react-icons/fa"
 
 
 function Sales() {
@@ -21,7 +23,19 @@ function Sales() {
       dispatch(reset())
     }
   }, [dispatch])
-  
+
+  const handleDownloadTable = () => {
+    const data = sales.map((sale) => {
+      return {
+        Date: sale.sold_date.slice(0,10).split('-').reverse().join('-'),
+        Item_Name: sale.item_id.item_name,
+        Sold_Quantity: sale.sold_quantity,
+        Sold_Price: sale.sold_price,
+        Total_Amount: sale.total_amount,
+      };
+    });
+    exportFile('sales', data);
+  };
 
 
 
@@ -33,7 +47,8 @@ function Sales() {
         <Container>
             <h1 style={{ marginTop:'40px'}}>Sales</h1>
             <p style={{ marginTop:'10px'}}>Manage your sales</p>
-            <Link to='/addsale'><Button variant="success" style={{ marginTop:'10px'}}>Add Sales</Button></Link>
+            <Link to='/addsale'><Button variant="success" style={{ marginTop:'10px'}}>Add Sales <FaPlus/></Button></Link>
+            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload/></Button>
             <br />
             {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
             {!isLoading && sales.length === 0 ?

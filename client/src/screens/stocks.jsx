@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import StockComp from "../components/stockComp"
 import { exportFile } from "../utils/excel"
-
-
+import { FaDownload, FaPlus } from "react-icons/fa"
 
 
 
@@ -50,8 +49,8 @@ function Stocks() {
         <Container >
             <h1 style={{ marginTop:'40px'}}>Stocks</h1>
             <p style={{ marginTop:'10px'}}>Manage your stocks</p>
-            <Link to='/addstock'><Button variant="success" style={{ marginTop:'10px'}}>Add Stock</Button></Link>
-            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table</Button>
+            <Link to='/addstock'><Button variant="success" style={{ marginTop:'10px'}}>Add Stock <FaPlus/></Button></Link>
+            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload/></Button>
             <br />
             {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
             {!isLoading && stocks.length === 0 ? 
