@@ -134,7 +134,7 @@ const UpdateStock = () => {
                             <div className="text-danger">{errors.item_price}</div>
                         ) : null}
                     </div>
-                    <Button variant="primary" type="submit">
+                    <Button variant="warning" type="submit" style={{ marginTop:'10px', width:'100%'}}>
                         Submit
                     </Button>
                 </Form>

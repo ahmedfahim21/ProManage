@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux'
 import { deleteStock } from '../slices/stocks-slice'
 import { useNavigate } from 'react-router-dom'
 
-function StockComp({stock}) {
+function StockComp(stocks) {
+
+    const stock = stocks.stock
 
     const dispatch = useDispatch()
     const navigate = useNavigate()

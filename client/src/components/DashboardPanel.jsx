@@ -12,6 +12,15 @@ function DashboardPanel() {
     const stockClickHandler = () => {
         navigate('/stocks')
     }
+    const salesClickHandler = () => {
+        navigate('/sales')
+    }
+    const dailySalesClickHandler = () => {
+        navigate('/dailysales')
+    }
+
+
+
 
   return (
     <div>
@@ -24,15 +33,15 @@ function DashboardPanel() {
                 />
                 <Carousel.Caption>
                 <h1>{userInfo.name}</h1>
-                <p>Manage your projects with ease</p>
+                <p>Manage your enterprise with ease</p>
                 </Carousel.Caption>
             </Carousel.Item>
             </Carousel>
         <Container style={{marginTop: '20px'}}>
         <Row>
         <Col onClick={stockClickHandler}><DashboardComp title='Stock' text='Manage your stocks'/></Col>
-        <Col><DashboardComp title='Sales' text='Manage your sales'/></Col>
-        <Col><DashboardComp title='Daily Sales' text='Check your daily sales'/></Col>
+        <Col onClick={salesClickHandler}><DashboardComp title='Sales' text='Manage your sales'/></Col>
+        <Col onClick={dailySalesClickHandler}><DashboardComp title='Daily Sales' text='Check your daily sales'/></Col>
         <Col><DashboardComp title='Expenses' text='Manage your expenses'/></Col>
         </Row>
         </Container>

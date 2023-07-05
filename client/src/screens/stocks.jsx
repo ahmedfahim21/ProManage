@@ -1,6 +1,6 @@
 import { Button, Container, ToastContainer } from "react-bootstrap"
 import Header from "../components/Header"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getAllStock, reset } from "../slices/stocks-slice"
 import Spinner from 'react-bootstrap/Spinner'
 import { useDispatch, useSelector } from "react-redux"
@@ -12,6 +12,7 @@ import StockComp from "../components/stockComp"
 function Stocks() {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const {stocks, isLoading} = useSelector((state) => state.stocks)
 
@@ -24,22 +25,20 @@ function Stocks() {
 
     }, [dispatch])
 
-    if(isLoading){
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    }
 
 
   return (
     <div>
         <Header />
+        <Button style={{position: 'absolute', right:'30px', margin: '10px'}} variant="primary" onClick={() => navigate('/dashboard')}> Back</Button>
+    
         <Container >
             <h1 style={{ marginTop:'40px'}}>Stocks</h1>
             <p style={{ marginTop:'10px'}}>Manage your stocks</p>
             <Link to='/addstock'><Button variant="success" style={{ marginTop:'10px'}}>Add Stock</Button></Link>
             <br />
-            {stocks.length === 0 ? 
+            {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+            {!isLoading && stocks.length === 0 ? 
             (<p style={{ marginTop:'10px'}}>No stocks available</p>)
             :
             (<table className="table table-striped" style={{ marginTop:'20px', fontSize: '16px'}}>

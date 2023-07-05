@@ -121,7 +121,7 @@ const StocksPage = () => {
                             <div className="text-danger">{errors.item_price}</div>
                         ) : null}
                     </div>
-                    <Button variant="primary" type="submit">
+                    <Button variant="success" type="submit" style={{ marginTop:'10px', width:'100%'}}>
                         Submit
                     </Button>
                 </Form>
