@@ -7,8 +7,7 @@ import 'chart.js/auto'
 
 
 
-function Analytics() {
-
+function MostPopular() {
 
     const dispatch = useDispatch()
 
@@ -23,17 +22,18 @@ function Analytics() {
 
 
 
-    const data = {
-        labels: sales.map((sale) => sale.item_id.item_name),
+    const data = { 
+        labels: sales.length > 0 ? (sales.map((sale) => sale.item_id.item_name)) : [],
         datasets: [
           {
-            label: 'Sales',
-            data: sales.map((sale) => sale.sold_quantity),
+            label: 'Quantity',
+            data: sales.length > 0 ? sales.map((sale) => sale.sold_quantity) : [],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
+
             ]
           },
         ],
@@ -50,23 +50,18 @@ function Analytics() {
           legend: {
             position: 'top',
           },
-          title: {
-            display: true,
-            text: 'Chart.js Bar Chart',
-          },
         },
       };
   
   return (
-    <Container>Analytics
-        <h2>Bar Chart Example</h2>
-      <Bar data={data} options={options} />
+    <Container style={{ padding: '30px' }}>
+        <h2>Most Popular</h2>
+        { sales.length > 0 ? (<Bar data={data} options={options} />):(<h3>No Data</h3>)}
     </Container>
   )
 }
 
-export default Analytics
-
+export default MostPopular
 
 
 

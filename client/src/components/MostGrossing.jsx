@@ -7,7 +7,7 @@ import 'chart.js/auto'
 
 
 
-function Analytics() {
+function MostGrossing() {
 
 
     const dispatch = useDispatch()
@@ -27,13 +27,14 @@ function Analytics() {
         labels: sales.map((sale) => sale.item_id.item_name),
         datasets: [
           {
-            label: 'Sales',
-            data: sales.map((sale) => sale.sold_quantity),
+            label: 'Amount',
+            data: sales.map((sale) => sale.total_amount),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
+
             ]
           },
         ],
@@ -50,23 +51,18 @@ function Analytics() {
           legend: {
             position: 'top',
           },
-          title: {
-            display: true,
-            text: 'Chart.js Bar Chart',
-          },
         },
       };
   
   return (
-    <Container>Analytics
-        <h2>Bar Chart Example</h2>
-      <Bar data={data} options={options} />
+    <Container style={{ padding: '30px' }}>
+        <h2>Most Grossing</h2>
+        { sales.length > 0 ? (<Bar data={data} options={options} />):(<h3>No Data</h3>)}
     </Container>
   )
 }
 
-export default Analytics
-
+export default MostGrossing
 
 
 
