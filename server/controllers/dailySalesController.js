@@ -13,6 +13,9 @@ const calculate = async () => {
                 total_quantity: {
                     $sum: "$sold_quantity"
                 },
+                total_profit: {
+                    $sum: "$total_profit"
+                },
                 user: { $first: "$user" }
             },
         },
@@ -22,6 +25,7 @@ const calculate = async () => {
                   date: '$_id',
                   total_sales: 1,
                   total_quantity: 1,
+                  total_profit: 1,
                   user: 1
                 },
         }

@@ -32,6 +32,7 @@ const SalesPage = () => {
         sold_quantity: '',
         sold_date: '',
         total_amount: '',
+        total_profit: '',
     };
 
     
@@ -40,7 +41,8 @@ const SalesPage = () => {
         sold_price: Yup.number().required('Item quantity is required'),
         sold_quantity: Yup.number().required('Item price is required'),
         sold_date: Yup.date().required('Date is required'),
-        total_amount: Yup.number()
+        total_amount: Yup.number(),
+        total_profit: Yup.number(),
     });
 
 
@@ -52,8 +54,10 @@ const SalesPage = () => {
             sold_price: values.sold_price,
             sold_quantity: values.sold_quantity,
             sold_date: values.sold_date,
-            total_amount: values.total_amount * values.sold_quantity,
+            total_amount: values.sold_price * values.sold_quantity,
+            total_profit: (values.sold_price - stocks.find((stock) => stock._id === values.item_id).item_price) * values.sold_quantity,
         }
+
         try{  
             //check if the item quantity is greater than the sold quantity
             const stock = stocks.find((stock) => stock._id === data.item_id)
@@ -79,6 +83,7 @@ const SalesPage = () => {
             values.sold_quantity = ''
             values.sold_date = ''
             values.total_amount = ''
+            values.total_profit = ''
 
 
 

@@ -49,8 +49,8 @@ function Stocks() {
         <Container >
             <h1 style={{ marginTop:'40px'}}>Stocks</h1>
             <p style={{ marginTop:'10px'}}>Manage your stocks</p>
-            <Link to='/addstock'><Button variant="success" style={{ marginTop:'10px'}}>Add Stock <FaPlus/></Button></Link>
-            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload/></Button>
+            <Link to='/addstock'><Button variant="success" style={{ padding:'10px'}}>Add Stock <FaPlus style={{marginTop:'-4px'}}/></Button></Link>
+            <Button variant="primary" style={{ padding:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload style={{marginTop:'-4px'}}/></Button>
             <br />
             {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
             {!isLoading && stocks.length === 0 ? 

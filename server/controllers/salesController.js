@@ -11,7 +11,8 @@ const UpdateSales = async (req,res)=>{
         sold_price: req.body.sold_price,
         sold_quantity: req.body.sold_quantity,
         sold_date: req.body.sold_date,
-        total_amount: req.body.sold_price*req.body.sold_quantity,
+        total_amount: req.body.total_amount,
+        total_profit: req.body.total_profit,
         user: req.user.id
     })
     try{

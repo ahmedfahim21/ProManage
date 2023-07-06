@@ -18,6 +18,10 @@ const dailySalesSchema = new mongoose.Schema({
     total_quantity:{
         type: Number,
         required: true
+    },
+    total_profit:{
+        type: Number,
+        required: true
     }
 })
 

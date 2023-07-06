@@ -32,6 +32,7 @@ function Sales() {
         Sold_Quantity: sale.sold_quantity,
         Sold_Price: sale.sold_price,
         Total_Amount: sale.total_amount,
+        Total_Profit: sale.total_profit,
       };
     });
     exportFile('sales', data);
@@ -47,8 +48,8 @@ function Sales() {
         <Container>
             <h1 style={{ marginTop:'40px'}}>Sales</h1>
             <p style={{ marginTop:'10px'}}>Manage your sales</p>
-            <Link to='/addsale'><Button variant="success" style={{ marginTop:'10px'}}>Add Sales <FaPlus/></Button></Link>
-            <Button variant="primary" style={{ marginTop:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload/></Button>
+            <Link to='/addsale'><Button variant="success" style={{ padding:'10px'}}>Add Sales <FaPlus style={{marginTop: '-4px'}}/></Button></Link>
+            <Button variant="primary" style={{ padding:'10px', marginLeft:'10px'}} onClick={handleDownloadTable}>Download Table <FaDownload style={{marginTop: '-4px'}}/></Button>
             <br />
             {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
             {!isLoading && sales.length === 0 ?
@@ -62,6 +63,7 @@ function Sales() {
                     <th scope="col">Sold Quantity</th>
                     <th scope="col">Sold Price</th>
                     <th scope="col">Total Amount</th>
+                    <th scope="col">Total Profit</th>
                     <th scope="col">Actions</th>
                     </tr>
                 </thead>

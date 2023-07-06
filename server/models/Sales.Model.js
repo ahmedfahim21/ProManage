@@ -21,12 +21,15 @@ const salesSchema = new mongoose.Schema({
     sold_date:{
         type: String,
         format: "%Y-%m-%d",
-        // 2default: Date.now,
         required: true,
     },
     total_amount:{
         type: Number,
-    }
+    },
+    total_profit:{
+        type: Number,
+    },
+
 })
 
 module.exports = mongoose.model('Sales', salesSchema)

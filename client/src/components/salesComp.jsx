@@ -41,6 +41,7 @@ function SalesComp(sale) {
         <td>{sales.sold_quantity}</td>
         <td>{sales.sold_price}</td>
         <td>{sales.total_amount}</td>
+        <td>{sales.total_profit}</td>
         <td>
             <Button variant="danger" style={{margin: '5px' }} onClick={deleteHandler(sales._id,sales.item_id)}>Delete</Button>
         </td>
