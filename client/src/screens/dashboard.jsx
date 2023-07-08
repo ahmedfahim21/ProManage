@@ -6,6 +6,7 @@ import MostPopular from "../components/MostPopular"
 import MostGrossing from "../components/MostGrossing"
 import DailyChart from "../components/DailyChart"
 import MostAvailable from "../components/MostAvailable"
+import ExpensesCategories from "../components/ExpensesCategories"
 
 function dashboard() {
   return (
@@ -36,6 +37,7 @@ function dashboard() {
         <MostAvailable/>
         </Col>
         <Col>
+        <ExpensesCategories/>
         </Col>
       </Row>
       </Container>

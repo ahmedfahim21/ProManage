@@ -57,7 +57,7 @@ function MostGrossing() {
   return (
     <Container style={{ padding: '30px' }}>
         <h2>Most Grossing</h2>
-        { sales.length > 0 ? (<Bar data={data} options={options} />):(<h3>No Data</h3>)}
+        { sales.length > 0 ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )
 }

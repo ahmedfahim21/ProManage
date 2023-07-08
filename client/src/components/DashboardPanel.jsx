@@ -18,8 +18,9 @@ function DashboardPanel() {
     const dailySalesClickHandler = () => {
         navigate('/dailysales')
     }
-
-
+    const expensesClickHandler = () => {
+        navigate('/expenses')
+    }
 
 
   return (
@@ -29,11 +30,11 @@ function DashboardPanel() {
                 <img
                 className="d-block w-100"
                 src={bannerimg}
-                style={{height:'300px', padding: '10px'}}
+                style={{height:'300px' , objectFit: 'cover'}}
                 />
                 <Carousel.Caption>
-                <h1>{userInfo.name}</h1>
-                <p>Manage your enterprise with ease</p>
+                <h1 style={{fontFamily: 'Montserrat'}}>Welcome {userInfo.name}</h1>
+                <p style={{fontFamily: 'Arial'}}>Manage your business with ease</p>
                 </Carousel.Caption>
             </Carousel.Item>
             </Carousel>
@@ -42,7 +43,7 @@ function DashboardPanel() {
         <Col onClick={stockClickHandler}><DashboardComp title='Stock' text='Manage your stocks'/></Col>
         <Col onClick={salesClickHandler}><DashboardComp title='Sales' text='Manage your sales'/></Col>
         <Col onClick={dailySalesClickHandler}><DashboardComp title='Daily Sales' text='Check your daily sales'/></Col>
-        <Col><DashboardComp title='Expenses' text='Manage your expenses'/></Col>
+        <Col onClick={expensesClickHandler}><DashboardComp title='Expenses' text='Manage your expenses'/></Col>
         </Row>
         </Container>
       

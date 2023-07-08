@@ -55,7 +55,7 @@ function MostAvailable() {
     <Container style={{ padding: '30px' }}>
         <h2>Most Available</h2>
         {(stocks.length > 0)?(
-            <Pie data={data} options={options} />):(<h3>No Data</h3>)}
+            <Pie data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )
 }

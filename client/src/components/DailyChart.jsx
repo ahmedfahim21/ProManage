@@ -61,7 +61,7 @@ function DailyChart() {
     <Container style={{ padding: '30px' }}>
         <h2>Daily Stats</h2>
         {dailySales.length > 0 ? (<Line data={data} options={options} />):
-        (<h3>No data to display</h3>)}
+        (<p>No data to display</p>)}
     </Container>
   )
 }
