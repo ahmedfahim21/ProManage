@@ -1,4 +1,4 @@
-import { Container, Button, Spinner } from "react-bootstrap"
+import { Container, Button, Spinner, Table } from "react-bootstrap"
 import Header from "../components/Header"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
@@ -55,7 +55,7 @@ function Sales() {
             {!isLoading && sales.length === 0 ?
             (<p style={{ marginTop:'10px'}}>No sales available</p>)
             :
-            (<table className="table table-striped" style={{ marginTop:'20px', fontSize: '16px'}}>
+            (<Table responsive striped style={{ marginTop:'20px', fontSize: '16px'}}>
                 <thead>
                     <tr>
                     <th scope="col">Date(YYYY-MM-DD)</th>
@@ -72,7 +72,7 @@ function Sales() {
                         <SalesComp key={sale._id} sale={sale}/>
                     ))}
                 </tbody>
-            </table>)}
+            </Table>)}
             <ToastContainer />
         </Container>
 

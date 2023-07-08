@@ -1,4 +1,4 @@
-import { Button, Container, ToastContainer } from "react-bootstrap"
+import { Button, Container, ToastContainer, Table } from "react-bootstrap"
 import Header from "../components/Header"
 import { Link, useNavigate } from "react-router-dom"
 import { getAllStock, reset } from "../slices/stocks-slice"
@@ -56,7 +56,7 @@ function Stocks() {
             {!isLoading && stocks.length === 0 ? 
             (<p style={{ marginTop:'10px'}}>No stocks available</p>)
             :
-            (<table className="table table-striped" style={{ marginTop:'20px', fontSize: '16px'}}>
+            (<Table responsive striped style={{ marginTop:'20px', fontSize: '16px'}}>
                 <thead>
                     <tr>  
                     <th scope="col">Item Name</th>
@@ -70,7 +70,7 @@ function Stocks() {
                         <StockComp key={stock._id} stock={stock}/>
                     ))}
                 </tbody>
-            </table>)}
+            </Table>)}
             <ToastContainer />
         </Container>
     </div>

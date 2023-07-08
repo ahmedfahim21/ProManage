@@ -6,8 +6,9 @@ import { FaDownload, FaPlus } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { GetAllExpenses, reset, deleteExpense } from '../slices/expense-slice'
-import Spinner from 'react-bootstrap/Spinner'
+import {Spinner, Table} from 'react-bootstrap'
 import { exportFile } from '../utils/excel'
+
 
 
 function Expenses() {
@@ -66,7 +67,7 @@ function Expenses() {
             {!isLoading && expenses.length === 0 ?
             (<p style={{ marginTop:'10px'}}>No expenses available</p>)
             :
-            (<table className="table table-striped" style={{ marginTop:'20px', fontSize: '16px'}}>
+            (<Table responsive striped style={{ marginTop:'20px', fontSize: '16px'}}>
                 <thead>
                     <tr>
                         <th>Expense</th>
@@ -89,7 +90,7 @@ function Expenses() {
                         </tr>
                     ))}
                 </tbody>
-            </table>)}
+            </Table>)}
             <ToastContainer />
             </Container>
             </div>

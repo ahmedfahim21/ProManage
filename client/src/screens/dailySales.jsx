@@ -1,4 +1,4 @@
-import { Button, Container, Spinner } from "react-bootstrap"
+import { Button, Container, Spinner, Table } from "react-bootstrap"
 import Header from "../components/Header"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
@@ -45,7 +45,7 @@ function DailySales() {
         <Button variant="primary" style={{ padding:'10px'}} onClick={handleDownloadTable} >Download Table <FaDownload style={{marginTop: '-4px'}}/></Button>
             
         {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
-        <table className="table table-striped" style={{ marginTop:'20px', fontSize: '16px'}}>
+        <Table responsive striped style={{ marginTop:'20px', fontSize: '16px'}}>
             <thead>
                 <tr>
                 <th scope="col">Date(YYYY-MM-DD)</th>
@@ -64,7 +64,7 @@ function DailySales() {
                     </tr>
                 ))}
             </tbody>
-        </table>
+        </Table>
         </Container>
 
     </div>
