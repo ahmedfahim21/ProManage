@@ -1,9 +1,10 @@
-import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, Container, NavDropdown, Button} from 'react-bootstrap'
 import {FaSignOutAlt, FaSignInAlt} from 'react-icons/fa'
 import {useSelector,useDispatch} from 'react-redux'
 import { useNavigate,Link } from 'react-router-dom' 
 import { logout } from '../slices/auth-slice'
 import { useLogoutMutation } from '../slices/usersapi-slice'
+import logo from '../assets/Logo.png'
 
 
 function Header() {
@@ -30,25 +31,31 @@ function Header() {
     <div>
         <Navbar bg="dark" variant="dark" collapseOnSelect expand='lg'>
             <Container>
-                <Navbar.Brand href="/">ProManage</Navbar.Brand>
+                <Navbar.Brand href="/"><img src={logo} style={{height: '50px'}} alt="logo" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls='navbar-toggle' />
                 <Navbar.Collapse className="justify-content-end" id="navbar-toggle" >
                 <Nav>{userInfo ? (
                   <Nav>
                   <NavDropdown title={userInfo.name} id='username'>
-                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                    <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
+                    <NavDropdown.Item href="/stocks">Stocks</NavDropdown.Item>
+                    <NavDropdown.Item href="/sales">Sales</NavDropdown.Item>
+                    <NavDropdown.Item href="/dailySales">Daily Sales</NavDropdown.Item>
+                    <NavDropdown.Item href="/expenses">Expenses</NavDropdown.Item>
+
+                    <NavDropdown.Item onClick={logoutHandler}><Button variant='danger' style={{ width:'100%'}}>Logout</Button></NavDropdown.Item>
                   </NavDropdown>
                   </Nav>
                 ):(
                   <>
-                    <Nav.Link><Link to='/login'><FaSignInAlt /> Login</Link></Nav.Link>
-                    <Nav.Link><Link to='/register'><FaSignOutAlt /> Register</Link></Nav.Link>
+                    <Nav.Link href='/login'><FaSignInAlt /> Login</Nav.Link>
+                    <Nav.Link  href='/register'><FaSignOutAlt /> Register</Nav.Link>
                   </>
                 )}    
                 </Nav>
                 </Navbar.Collapse>
             </Container>
-        </Navbar>            
+        </Navbar>          
     </div>
   )
 }
