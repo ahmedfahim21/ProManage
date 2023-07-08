@@ -1,7 +1,7 @@
 import {Navbar, Nav, Container, NavDropdown, Button} from 'react-bootstrap'
 import {FaSignOutAlt, FaSignInAlt} from 'react-icons/fa'
 import {useSelector,useDispatch} from 'react-redux'
-import { useNavigate,Link } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom' 
 import { logout } from '../slices/auth-slice'
 import { useLogoutMutation } from '../slices/usersapi-slice'
 import logo from '../assets/Logo.png'

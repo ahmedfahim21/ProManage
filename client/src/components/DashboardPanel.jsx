@@ -34,11 +34,11 @@ function DashboardPanel() {
                 />
                 <Carousel.Caption>
                 <h1 style={{fontFamily: 'Montserrat'}}>Welcome {userInfo.name}</h1>
-                <p style={{fontFamily: 'Arial'}}>Manage your business with ease</p>
+                <p style={{fontFamily: 'Arial', fontSize:'16px'}}>Manage your business productively & professionally</p>
                 </Carousel.Caption>
             </Carousel.Item>
             </Carousel>
-        <Container style={{marginTop: '20px'}}>
+        <Container style={{marginTop: '20px', alignItems: 'center', display: 'flex', justifyContent: 'center'}}>
         <Row>
         <Col onClick={stockClickHandler}><DashboardComp title='Stock' text='Manage your stocks'/></Col>
         <Col onClick={salesClickHandler}><DashboardComp title='Sales' text='Manage your sales'/></Col>
