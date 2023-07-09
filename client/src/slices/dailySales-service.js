@@ -1,6 +1,6 @@
 import axios from "axios";
+import {API_URL} from "../utils/env";
 
-const API_URL = "http://localhost:3000/api/daily_sales/";
 
 const getAllDailySales = async (token) => {
     const config = {
@@ -8,7 +8,7 @@ const getAllDailySales = async (token) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await axios.get(API_URL + "get_daily_sales", config);
+    const response = await axios.get(API_URL + "api/daily_sales/get_daily_sales", config);
     return response.data;
 
 }

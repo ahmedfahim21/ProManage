@@ -1,6 +1,6 @@
 import axios from "axios";
+import {API_URL} from "../utils/env";
 
-const API_URL = "http://localhost:3000/api/sales/";
 
 const createSale = async (data, token) => {
     const config = {
@@ -8,7 +8,7 @@ const createSale = async (data, token) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await axios.post(API_URL + "update_sales", data, config);
+    const response = await axios.post(API_URL + "api/sales/update_sales", data, config);
 
     return response.data;
 };
@@ -19,7 +19,7 @@ const getAllSales = async (token) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await axios.get(API_URL + "get_sales", config);
+    const response = await axios.get(API_URL + "api/sales/get_sales", config);
     return response.data;
 
 };
@@ -30,7 +30,7 @@ const deleteSale = async (id, token) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await axios.delete(API_URL + "delete_sales_by_id/" + id, config);
+    const response = await axios.delete(API_URL + "api/sales/delete_sales_by_id/" + id, config);
 
     return response.data;
 };

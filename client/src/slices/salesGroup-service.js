@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:3000/api/sales/";
-
+import {API_URL} from "../utils/env";
 
 const getAllSalesGrouped = async (token) => {
     const config = {
@@ -9,7 +7,7 @@ const getAllSalesGrouped = async (token) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await axios.get(API_URL + "get_sales_group", config);
+    const response = await axios.get(API_URL + "api/sales/get_sales_group", config);
 
     return response.data;
 
