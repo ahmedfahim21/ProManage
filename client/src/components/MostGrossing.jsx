@@ -12,7 +12,7 @@ function MostGrossing() {
 
     const dispatch = useDispatch()
 
-    const {salesGroup,isSuccess} = useSelector((state) => state.salesGroup)
+    const {salesGroup,isLoading} = useSelector((state) => state.salesGroup)
 
     useEffect(() => {
       dispatch(getAllSalesGrouped())
@@ -56,8 +56,8 @@ function MostGrossing() {
   return (
     <Container style={{ padding: '30px' }}>
         <h2>Most Grossing</h2>
-        {!isSuccess && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
-        { salesGroup.length > 0 && isSuccess ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        { salesGroup.length > 0 && !isLoading ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )
 }
