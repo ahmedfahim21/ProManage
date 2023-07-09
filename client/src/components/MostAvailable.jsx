@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ function MostAvailable() {
 
     const dispatch = useDispatch()
 
-    const {stocks} = useSelector((state) => state.stocks)
+    const {stocks, isLoading} = useSelector((state) => state.stocks)
 
     useEffect(() => {
       dispatch(getAllStock())
@@ -29,14 +29,6 @@ function MostAvailable() {
           {
             label: 'Profit',
             data: stocks.map((stock) => stock.item_quantity),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-            ]
             
           }
         ],
@@ -52,9 +44,10 @@ function MostAvailable() {
       };
   
   return (
-    <Container style={{ padding: '30px' }}>
-        <h2>Most Available</h2>
-        {(stocks.length > 0)?(
+    <Container style={{ padding: '30px', width: '80%'}}>
+        <h2>Most Available Item</h2>
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        {(stocks.length > 0 && !isLoading)?(
             <Pie data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )

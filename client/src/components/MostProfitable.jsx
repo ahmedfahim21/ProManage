@@ -1,8 +1,8 @@
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllSales, reset } from '../slices/sales-slice';
+import { getAllSalesGrouped, reset } from '../slices/salesGroup-slice';
 import 'chart.js/auto'
 
 
@@ -12,10 +12,10 @@ function MostProfitable() {
 
     const dispatch = useDispatch()
 
-    const {sales} = useSelector((state) => state.sales)
+    const {salesGroup,isLoading} = useSelector((state) => state.salesGroup)
 
     useEffect(() => {
-      dispatch(getAllSales())
+      dispatch(getAllSalesGrouped())
       return () => {
         dispatch(reset())
       }
@@ -24,16 +24,18 @@ function MostProfitable() {
 
 
     const data = {
-        labels: sales.map((sale) => sale.item_id.item_name),
+        labels: salesGroup.map((sale) => sale.item.item_name),
         datasets: [
           {
             label: 'Profit',
-            data: sales.map((sale) => sale.total_profit),
+            data: salesGroup.map((sale) => sale.total_profit),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
 
             ]
           },
@@ -57,7 +59,8 @@ function MostProfitable() {
   return (
     <Container style={{ padding: '30px' }}>
         <h2>Most Profitable</h2>
-        { sales.length > 0 ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        { salesGroup.length > 0 && !isLoading ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )
 }

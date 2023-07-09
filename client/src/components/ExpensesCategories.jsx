@@ -1,9 +1,10 @@
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Radar } from 'react-chartjs-2';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetAllExpenses, reset } from '../slices/expense-slice';
+import { GetExpensesByCategory, reset } from '../slices/expense-slice';
 import 'chart.js/auto'
+
 
 
 
@@ -11,34 +12,22 @@ function ExpensesCategories() {
 
     const dispatch = useDispatch()
 
-    const {expenses} = useSelector((state) => state.expenses)
+    const {expensesbyCategory,isLoading} = useSelector((state) => state.expenses)
 
     useEffect(() => {
-      dispatch(GetAllExpenses())
+      dispatch(GetExpensesByCategory()) 
       return () => {
         dispatch(reset())
       }
     }, [dispatch])
 
-    const groupByCategory = (expenses) => {
-        const grouped = expenses.reduce((acc, expense) => {
-            const key = expense.category;
-            if(!acc[key]){
-                acc[key] = []
-            }
-            acc[key] = acc[key]+ expense.amount
-            return acc
-        }, {})
-        return grouped
-    }
 
     const data = { 
-        labels: expenses.length > 0 ? Object.keys(groupByCategory(expenses)) : [],
+        labels: expensesbyCategory.length > 0 ? expensesbyCategory.map((expense) => expense._id) : [],
         datasets: [
           {
             label: 'Amount',
-            data: expenses.length > 0 ? Object.values(groupByCategory(expenses)).map((value) => value) : [],
-            backgroundColor: 'rgb(153, 102, 255, 0.2)',
+            data: expensesbyCategory.length > 0 ? expensesbyCategory.map((expense) => expense.total) : [],
           },
         ],
       };
@@ -49,14 +38,18 @@ function ExpensesCategories() {
           legend: {
             position: 'top',
           },
+          colors: {
+            enabled: true
+          }
         },
       };
   
   return (
-    <Container style={{ padding: '30px' }}>
-        <h1>Expenses</h1>
-        {expenses.length === 0 ? (<p>No data to display</p>):
-         (<Radar data={data} options={options} />)}
+    <Container style={{ padding: '50px', width: '80%'}}>
+        <h2>Expenses</h2>
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        {expensesbyCategory.length == 0  && !isLoading? (<p>No data to display</p>):
+          (<Radar data={data} options={options} />)}
     </Container>
   )
 }

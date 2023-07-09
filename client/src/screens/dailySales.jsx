@@ -1,16 +1,20 @@
-import { Button, Container, Spinner, Table } from "react-bootstrap"
+import { Button, Container, Spinner, Table, Modal } from "react-bootstrap"
 import Header from "../components/Header"
 import { useSelector, useDispatch } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getAllDailySales, reset } from "../slices/dailySales-slice"
 import { useNavigate } from "react-router-dom"
-import { FaDownload } from "react-icons/fa"
+import { FaDownload, FaChartBar } from "react-icons/fa"
 import { exportFile } from "../utils/excel"
+import DailyChart from "../components/DailyChart"
 
 function DailySales() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const {dailySales, isLoading} = useSelector((state) => state.dailySales)
 
@@ -43,7 +47,8 @@ function DailySales() {
         <h1>Daily Sales</h1>
         <hr />
         <Button variant="primary" style={{ padding:'10px'}} onClick={handleDownloadTable} >Download Table <FaDownload style={{marginTop: '-4px'}}/></Button>
-            
+        <Button variant="info" style={{ padding:'10px', marginLeft:'10px'}} onClick={handleShow}>Analytics <FaChartBar style={{marginTop:'-4px'}}/></Button>
+        <br/>
         {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
         <Table responsive striped style={{ marginTop:'20px', fontSize: '16px'}}>
             <thead>
@@ -65,6 +70,25 @@ function DailySales() {
                 ))}
             </tbody>
         </Table>
+        <Modal
+            show={show}
+            onHide={handleClose}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                Analytics
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                    <DailyChart />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={handleClose}>Close</Button>
+            </Modal.Footer>
+            </Modal>
         </Container>
 
     </div>

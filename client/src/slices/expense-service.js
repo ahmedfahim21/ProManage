@@ -35,13 +35,22 @@ const deleteExpense = async (id,token) => {
     return response.data;
 }
 
-
+const getExpensesByCategory = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'get_expenses_by_category', config);
+    return response.data;
+}
 
 
 const expenseService = {
     createExpense,
     getAllExpenses,
-    deleteExpense
+    deleteExpense,
+    getExpensesByCategory
 };
 
 export default expenseService;

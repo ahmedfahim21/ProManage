@@ -5,6 +5,7 @@ import stocksReducer from './slices/stocks-slice';
 import salesReducer from './slices/sales-slice';
 import dailySalesReducer from './slices/dailySales-slice';
 import expenseReducer from './slices/expense-slice';
+import salesGroupReducer from './slices/salesGroup-slice';
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         sales: salesReducer,
         dailySales: dailySalesReducer,
         expenses: expenseReducer,
+        salesGroup: salesGroupReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),

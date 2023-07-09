@@ -79,10 +79,10 @@ const RegistrationPage = () => {
   return (
     <>
     <Header/>
-    <Container>
+    <Container style={{marginTop: '100px'}}>
       <Row className="justify-content-center">
         <Col xs={12} md={6}>
-          <h1 className='my-3'>Registration</h1>
+          <h1 className='my-3'>Register</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}

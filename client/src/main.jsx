@@ -16,6 +16,7 @@ import StocksPage from './screens/addStock.jsx'
 import UpdateStock from './screens/updateStock.jsx'
 import Sales from './screens/sales.jsx'
 import SalesPage from './screens/addSale.jsx'
+import SalesGroupPage from './screens/salesGroup.jsx'
 import DailySales from './screens/dailySales.jsx'
 import Expenses from './screens/expenses.jsx'
 import AddExpenses from './screens/addExpenses.jsx'
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { name: 'UpdateStock', path: '/updatestock/:id', element: <UpdateStock/>},
       { name: 'Sales', path: '/sales', element: <Sales /> },
       { name: 'AddSale', path: '/addsale', element: <SalesPage /> },
+      { name: 'SaleGroup', path: '/salesgroup', element: <SalesGroupPage /> },
       { name: 'DailySales', path: '/dailysales', element: <DailySales />},
       { name: 'Expenses', path: '/expenses', element: <Expenses/>},
       { name: 'AddExpenses', path: '/addexpenses', element: <AddExpenses/>},

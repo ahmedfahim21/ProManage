@@ -3,6 +3,7 @@ import expenseService from './expense-service';
 
 const initialState = {
     expenses: [],
+    expensesbyCategory: [],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -50,6 +51,22 @@ export const deleteExpense = createAsyncThunk(
         }
     }
 );
+
+// Get expenses by category
+export const GetExpensesByCategory = createAsyncThunk(
+    'expenses/get_expenses_by_category',
+    async (_, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : null; 
+            return await expenseService.getExpensesByCategory(token);
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue({error: err.message});
+        }
+    }
+);
+
+
 
 
 
@@ -105,6 +122,20 @@ export const expenseSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload.error;
             })
+            .addCase(GetExpensesByCategory.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(GetExpensesByCategory.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expensesbyCategory = action.payload;
+            })
+            .addCase(GetExpensesByCategory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload.error;
+            })
+
     }
 });
 

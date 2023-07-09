@@ -1,8 +1,8 @@
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllSales, reset } from '../slices/sales-slice';
+import { getAllSalesGrouped, reset } from '../slices/salesGroup-slice';
 import 'chart.js/auto'
 
 
@@ -11,10 +11,10 @@ function MostPopular() {
 
     const dispatch = useDispatch()
 
-    const {sales} = useSelector((state) => state.sales)
+    const {salesGroup,isLoading} = useSelector((state) => state.salesGroup)
 
     useEffect(() => {
-      dispatch(getAllSales())
+      dispatch(getAllSalesGrouped())
       return () => {
         dispatch(reset())
       }
@@ -23,11 +23,11 @@ function MostPopular() {
 
 
     const data = { 
-        labels: sales.length > 0 ? (sales.map((sale) => sale.item_id.item_name)) : [],
+        labels: salesGroup.length > 0 ? (salesGroup.map((sale) => sale.item.item_name)) : [],
         datasets: [
           {
-            label: 'Quantity',
-            data: sales.length > 0 ? sales.map((sale) => sale.sold_quantity) : [],
+            label: 'Quantity Sold',
+            data: salesGroup.length > 0 ? salesGroup.map((sale) => sale.total_quantity) : [],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -38,6 +38,7 @@ function MostPopular() {
           },
         ],
       };
+
 
       const options = {
         scales: {
@@ -54,9 +55,10 @@ function MostPopular() {
       };
   
   return (
-    <Container style={{ padding: '30px' }}>
+    <Container style={{ padding: '30px'}}>
         <h2>Most Popular</h2>
-        { sales.length > 0 ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        { salesGroup.length > 0 && !isLoading ? (<Bar data={data} options={options} />):(<p>No data to display</p>)}
     </Container>
   )
 }

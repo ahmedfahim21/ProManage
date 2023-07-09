@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ function DailyChart() {
 
     const dispatch = useDispatch()
 
-    const {dailySales} = useSelector((state) => state.dailySales)
+    const {dailySales,isLoading} = useSelector((state) => state.dailySales)
 
     useEffect(() => {
       dispatch(getAllDailySales())
@@ -34,7 +34,7 @@ function DailyChart() {
             
           },
           {
-            label: 'Amount',
+            label: 'Total Amount',
             data: dailySales.map((sale) => sale.total_sales),
             backgroundColor: 'rgba(54, 162, 235, 1)',
             borderColor: 'rgba(54, 162, 235, 1)',
@@ -60,7 +60,8 @@ function DailyChart() {
   return (
     <Container style={{ padding: '30px' }}>
         <h2>Daily Stats</h2>
-        {dailySales.length > 0 ? (<Line data={data} options={options} />):
+        {isLoading && <Spinner animation="border" variant="primary" style={{ marginTop:'20px'}}/>}
+        {dailySales.length > 0 && !isLoading ? (<Line data={data} options={options} />):
         (<p>No data to display</p>)}
     </Container>
   )

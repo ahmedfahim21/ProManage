@@ -54,8 +54,30 @@ const DeleteExpenseById = async (req,res)=>{
     }
 }
 
+//@ desc   Get expensed grouped by category
+//@ route  GET /expenses/get_expenses_by_category
+//@ access Private
+const GetExpensesByCategory = async (req,res)=>{
+    try{
+        const data = await Expenses.aggregate([
+            {
+                $group: {
+                    _id: "$category",
+                    total: { $sum: "$amount" }
+                }
+            }
+        ]);
+        res.status(200).json(data);
+    }
+    catch(err){
+        res.status(400).json({message: err});
+    }
+}
+
+
 module.exports = {
     AddExpense,
     GetAllExpenses,
-    DeleteExpenseById
+    DeleteExpenseById,
+    GetExpensesByCategory
 }
