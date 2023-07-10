@@ -27,7 +27,7 @@ function MostAvailable() {
         labels: stocks.map((stock) => stock.item_name),
         datasets: [
           {
-            label: 'Profit',
+            label: 'Quantity Available',
             data: stocks.map((stock) => stock.item_quantity),
             
           }
