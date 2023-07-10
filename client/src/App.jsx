@@ -34,7 +34,6 @@ function App() {
       </Container>
       <Container>
         <h2>Why Choose ProManage?</h2>
-        <p>Explain the unique selling points of your system:</p>
         <ul>
           <li>Efficiently manage all aspects of your business in one system.</li>
           <li>Real-time insights and analytics for data-driven decision making.</li>
@@ -46,7 +45,7 @@ function App() {
         <p>&copy; {new Date().getFullYear()} ProManage. All rights reserved.</p>
       </footer>
       </Container>
-      <img src={logo} alt="logo" style={{ width: '40rem', position: 'absolute', bottom: '0rem', right: '0rem', opacity: '0.1' }} />
+      <img src={logo} alt="logo" style={{ width: '40rem', position: 'absolute', bottom: '0rem', right: '0rem', opacity: '0.1', zIndex: '-5' }} />
     </div>
   )
 }
