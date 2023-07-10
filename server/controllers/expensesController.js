@@ -61,9 +61,12 @@ const GetExpensesByCategory = async (req,res)=>{
     try{
         const data = await Expenses.aggregate([
             {
+                $match: { user: req.user._id }
+            },
+            {
                 $group: {
                     _id: "$category",
-                    total: { $sum: "$amount" }
+                    total: { $sum: "$amount" },
                 }
             }
         ]);

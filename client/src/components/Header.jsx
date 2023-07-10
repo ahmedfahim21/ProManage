@@ -48,8 +48,8 @@ function Header() {
                   </Nav>
                 ):(
                   <>
-                    <Nav.Link href='/login'><FaSignInAlt /> Login</Nav.Link>
-                    <Nav.Link  href='/register'><FaSignOutAlt /> Register</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/login')}><FaSignInAlt /> Login</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/register')}><FaSignOutAlt /> Register</Nav.Link>
                   </>
                 )}    
                 </Nav>
