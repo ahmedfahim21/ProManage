@@ -13,15 +13,15 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-    }
-);
+
 app.use(express.json());
 
 mongoose.connect(databaseURL , { useNewUrlParser: true, useUnifiedTopology: true });
 const database = mongoose.connection;
 database.on('error', (error) => console.error(error));
-database.once('open', () => console.log('Connected to Database'));
+database.once('open', () =>{
+    console.log('Connected to Database');
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+});
 
 app.use('/api', routes);
