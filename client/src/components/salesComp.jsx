@@ -2,12 +2,14 @@ import { Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { deleteSale } from '../slices/sales-slice'
 import { updateStock } from '../slices/stocks-slice';
+import { useNavigate } from 'react-router-dom';
 
 function SalesComp(sale) {
 
     const sales = sale.sale
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const deleteHandler = (id,item_id) => async () => {
       try{
@@ -23,7 +25,7 @@ function SalesComp(sale) {
           dispatch(updateStock({id: item_id._id, data: stock}))
 
           dispatch(deleteSale(id))
-          window.location.reload()
+          navigate(0)
         }
 
 

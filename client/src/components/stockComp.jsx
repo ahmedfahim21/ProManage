@@ -16,7 +16,7 @@ function StockComp(stocks) {
         const confirm = window.confirm('Are you sure you want to delete this stock?')
         if(confirm){
           dispatch(deleteStock(id))
-          window.location.reload()
+          navigate(0)
         }
 
 
