@@ -35,7 +35,7 @@ function Expenses() {
             const confirm = window.confirm('Are you sure you want to delete this expense?')
             if(confirm){
                 await dispatch(deleteExpense(id))
-                window.location.reload()
+                navigate(0)
             }
         }
         catch(err){
